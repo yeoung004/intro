@@ -345,6 +345,10 @@
       left: 1vw;
       margin-bottom: 1vw;
     }
+    .icon{
+      width: 5vw;
+
+    }
   </style>
 <head>
   <meta charset="UTF-8">
@@ -622,6 +626,24 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <div class="contentLeft">
+        <div class="title hello">Hello</div>
+        <div class="circle1 circle"></div>
+      </div>
+      <div class="contentRight">
+        <div class="title world">World!</div>
+        <div class="circle2 circle"></div>
+        <div class="project-detail">
+          <div class="project-detail-right">
+            <a href="https://github.com/yeoung004" class="project-detail-title">Gibhub</a>
+            <p class="project-detail-title">https://github.com/yeoung004</p><br>
+            <a href="mailto: dudtjd4149@gmail.com" class="project-detail-title">Email</a>
+            <p class="project-detail-title">dudtjd4149@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </body>
@@ -687,8 +709,8 @@
     scrollIndex = scrollIndex + (isScollToBottom ? 1 : -1)
     if(scrollIndex < 0)
       scrollIndex = 0
-    else if(scrollIndex > 5)
-      scrollIndex = 5
+    else if(scrollIndex > 6)
+      scrollIndex = 6
 
     target.scrollTo({behavior:"smooth", top: window.innerHeight * scrollIndex})
   })
