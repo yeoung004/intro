@@ -322,6 +322,12 @@
       top: 5vw;
       left: -1vw;
     }
+    .assembleWraper {
+      margin-top: 3vw;
+    }
+    .assembleImg {
+      width: 10vw;
+    }
     .assembleSkill {
       display: flex;
       margin-top: 2vw;
@@ -507,6 +513,31 @@
           <div class="project-detail-right">
             <p class="project-detail-title">Assemble</p>
             <p class="project-detail-content">Side Project app for a Developer</p>
+            <div class="assembleWraper">
+              <img class="assembleImg" src="./asset/assemble1.png">
+              <img class="assembleImg" src="./asset/assemble2.png">
+              <img class="assembleImg" src="./asset/assemble3.png">
+              <img class="assembleImg" src="./asset/assemble4.png">
+              <img class="assembleImg" src="./asset/assemble5.png">
+              <img class="assembleImg" src="./asset/assemble6.png">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="contentLeft">
+        <div class="title hello">Hello</div>
+        <div class="circle1 circle"></div>
+      </div>
+      <div class="contentRight">
+        <div class="title world">World!</div>
+        <div class="circle2 circle"></div>
+        <div class="project-detail">
+          <div class="project-detail-right">
+            <p class="project-detail-title">Assemble</p>
+            <p class="project-detail-content">Side Project app for a Developer</p>
             
             <div class="assembleSkill">
               <div class="assembleSkill-col">
@@ -656,8 +687,8 @@
     scrollIndex = scrollIndex + (isScollToBottom ? 1 : -1)
     if(scrollIndex < 0)
       scrollIndex = 0
-    else if(scrollIndex > 4)
-      scrollIndex = 4
+    else if(scrollIndex > 5)
+      scrollIndex = 5
 
     target.scrollTo({behavior:"smooth", top: window.innerHeight * scrollIndex})
   })
