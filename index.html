@@ -331,10 +331,26 @@
       top: 2vw;
     }
     .assembleWraper {
-      margin-top: 3vw;
+      top: -18vh;
+      background-image: url('./asset/assemble.png');
+      width: 100vw;
+      height: 100vh;
+      background-position: left;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: relative;
     }
-    .assembleImg {
-      width: 10vw;
+    .stores {
+      position: absolute;
+      right: 2vw;
+      top: 2vh;
+    }
+    .store {
+      border-radius: 10px;
+      background: #ffffff;
+      width: 100px;
+      padding-left: 10px;
+      padding-right: 10px;
     }
     .assembleSkill {
       display: flex;
@@ -536,16 +552,11 @@
         <div class="title world">World!</div>
         <div class="circle2 circle"></div>
         <div class="project-detail">
-          <div class="project-detail-right">
-            <p class="project-detail-title">Assemble</p>
-            <p class="project-detail-content">- Side Project app for a developer</p>
-            <div class="assembleWraper">
-              <img class="assembleImg" src="./asset/assemble1.png">
-              <img class="assembleImg" src="./asset/assemble2.png">
-              <img class="assembleImg" src="./asset/assemble3.png">
-              <img class="assembleImg" src="./asset/assemble4.png">
-              <img class="assembleImg" src="./asset/assemble5.png">
-              <img class="assembleImg" src="./asset/assemble6.png">
+          <div class="assembleWraper">
+            <div class="stores">
+              <a href="https://play.google.com/store/apps/details?id=com.assemble.assembleapp">
+                <img class="store" src="./asset/playstore.png">
+              </a>
             </div>
           </div>
         </div>
@@ -562,9 +573,7 @@
         <div class="circle2 circle"></div>
         <div class="project-detail">
           <div class="project-detail-right">
-            <p class="project-detail-title">Assemble</p>
-            <p class="project-detail-content">Side Project app for a Developer</p>
-            
+            <p class="project-detail-title">Assemble(Tech)</p>
             <div class="assembleSkill">
               <div class="assembleSkill-col">
                 <p class="assembleTitle">Backend</p>
@@ -705,7 +714,7 @@
   target.addEventListener('wheel', event => {
     const contentsRight = document.getElementsByClassName('contentRight')
     const contentsLeft = document.getElementsByClassName('contentLeft')
-    const isScollToBottom = event.deltaY > 0
+    let isScollToBottom = event.deltaY > 0
     let min = 20
 
     if(scrollIndex == 0 && isScollToBottom){
@@ -731,10 +740,27 @@
     }
 
     scrollIndex = scrollIndex + (isScollToBottom ? 1 : -1)
-    if(scrollIndex < 0)
-      scrollIndex = 0
-    else if(scrollIndex > 6)
+    if(scrollIndex < 0){
       scrollIndex = 6
+      clearIntervals()
+      let id = setInterval(()=> {
+        Object.keys(contentsRight).forEach(key => {
+          contentsLeft[key].style.width = 15 + '%'
+          contentsRight[key].style.width = 85 + '%'
+        })
+      }, 10)
+      intervalList.push(id)
+    }else if(scrollIndex > 6){
+      scrollIndex = 0
+      clearIntervals()
+      id = setInterval(()=> {
+        Object.keys(contentsRight).forEach(key => {
+          contentsLeft[key].style.width = 40 + '%'
+          contentsRight[key].style.width = 60 + '%'
+        })
+      }, 10)
+      intervalList.push(id)
+    }
 
     target.scrollTo({behavior:"smooth", top: window.innerHeight * scrollIndex})
   })
