@@ -768,7 +768,7 @@
         if(min > 0) min--
       }, 10)
       intervalList.push(id)
-    }else if(scrollIndex == 1 && !isScollToBottom){
+    }else if((scrollIndex == 1 && !isScollToBottom)||(index == 0 && !isScollToBottom)){
       clearIntervals()
       let id = setInterval(()=> {
         Object.keys(contentsRight).forEach(key => {
