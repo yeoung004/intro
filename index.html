@@ -382,6 +382,28 @@
       font-size: 1.5vw;
       margin-left: 1.5vw;
     }
+    .index-wrap {
+      z-index: 9999;
+      right: 0;
+      height: 100%;
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .index {
+      margin: 10px;
+      margin-right: 20px;
+      background-color: aliceblue;
+      opacity: 0.5;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+    }
+    .selected-index {
+      opacity: 1;
+    }
   </style>
 <head>
   <meta charset="UTF-8">
@@ -393,7 +415,15 @@
   <div class="wrap">
     <img src="./asset/left.png" class="back1 back" /> 
     <img src="./asset/right.png" class="back2 back" />
-    
+    <div class="index-wrap">
+      <button type="button" onclick="moveBack(null, 0)" class="index selected-index"></button>
+      <button type="button" onclick="moveBack(null, 1)" class="index"></button>
+      <button type="button" onclick="moveBack(null, 2)" class="index"></button>
+      <button type="button" onclick="moveBack(null, 3)" class="index"></button>
+      <button type="button" onclick="moveBack(null, 4)" class="index"></button>
+      <button type="button" onclick="moveBack(null, 5)" class="index"></button>
+      <button type="button" onclick="moveBack(null, 6)" class="index"></button>
+    </div>
     <span class="container first">
       <div class="introWrap">
         <div class="im intro-txt">I'm</div>
@@ -683,6 +713,19 @@
   let scrollIndex = 0
   let animatedId = null
   let intervalList = []
+  const target = document.querySelector('html')
+  const contentsRight = document.getElementsByClassName('contentRight')
+  const contentsLeft = document.getElementsByClassName('contentLeft')
+  const index_circles = document.getElementsByClassName('index')
+
+  function changeIndex(index) { 
+    Object.keys(index_circles).forEach(key => {
+      index_circles[key].className = 'index'
+    })
+    index_circles[scrollIndex].className = 'index selected-index'
+    target.scrollTo({behavior:"smooth", top: window.innerHeight * scrollIndex})
+  }
+
   const changeWidth = (width) => {
     const contentsRight = document.getElementsByClassName('contentRight')
     const contentsLeft = document.getElementsByClassName('contentLeft')
@@ -706,15 +749,14 @@
     back.style[positionX] = newX+'px'
     back.style[positionY] = newY+'px'
   }
+
   const clearIntervals = () => { 
     intervalList.forEach(id => clearInterval(id))
   }
-  const target = document.querySelector('html')
-  target.addEventListener('wheel', event => {
-    const contentsRight = document.getElementsByClassName('contentRight')
-    const contentsLeft = document.getElementsByClassName('contentLeft')
-    let isScollToBottom = event.deltaY > 0
+
+  const moveBack = (event = null, index = -1) => { 
     let min = 20
+    let isScollToBottom = event ? event.deltaY > 0 : index > scrollIndex
 
     if(scrollIndex == 0 && isScollToBottom){
       clearIntervals()
@@ -737,32 +779,20 @@
       }, 10)
       intervalList.push(id)
     }
+    if(index > -1)
+      scrollIndex = index
+    else
+      scrollIndex = scrollIndex + (isScollToBottom ? 1 : -1)
 
-    scrollIndex = scrollIndex + (isScollToBottom ? 1 : -1)
-    if(scrollIndex < 0){
-      scrollIndex = 6
-      clearIntervals()
-      let id = setInterval(()=> {
-        Object.keys(contentsRight).forEach(key => {
-          contentsLeft[key].style.width = 15 + '%'
-          contentsRight[key].style.width = 85 + '%'
-        })
-      }, 10)
-      intervalList.push(id)
-    }else if(scrollIndex > 6){
+    if(scrollIndex < 0)
       scrollIndex = 0
-      clearIntervals()
-      id = setInterval(()=> {
-        Object.keys(contentsRight).forEach(key => {
-          contentsLeft[key].style.width = 40 + '%'
-          contentsRight[key].style.width = 60 + '%'
-        })
-      }, 10)
-      intervalList.push(id)
-    }
+    else if(scrollIndex > 6)
+      scrollIndex = 6
 
-    target.scrollTo({behavior:"smooth", top: window.innerHeight * scrollIndex})
-  })
+    changeIndex(scrollIndex)
+  }
+
+  target.addEventListener('wheel', event => moveBack(event))
 
   window.addEventListener("resize", (e) => {
     document.getElementsByClassName('back1')[0].style['left'] = '0vw'
